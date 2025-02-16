@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background text-white flex flex-col items-center justify-center">
       <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-4">Welcome to your MoodBuddi</h1>
+        <h1 className="text-4xl font-bold mb-4">Welcome to your MoodiBuddi</h1>
         <p className="text-lg">
           Track your mood and see how it relates to the weather.
         </p>
@@ -34,7 +34,7 @@ const LandingPage = () => {
         </section>
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

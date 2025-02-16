@@ -116,7 +116,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-poppins;
+    @apply bg-background/95 text-foreground font-poppins;
   }
 }
 
