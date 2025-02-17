@@ -118,6 +118,18 @@
   body {
     @apply bg-background/95 text-foreground font-poppins;
   }
+
+  ::-webkit-scrollbar {
+    @apply w-0;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+  }
 }
 
 @layer components {

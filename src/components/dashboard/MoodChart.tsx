@@ -74,7 +74,7 @@ const MoodChart = () => {
   }
 
   return (
-    <Card className="w-full bg-transparent border-white/25">
+    <Card className="bg-transparent border-white/25">
       <CardHeader>
         <CardTitle className="flex justify-between items-center">
           <span>Past Week Mood</span>
@@ -109,7 +109,7 @@ const MoodChart = () => {
                 <Line
                   type="monotone"
                   dataKey="moodValue"
-                  stroke="#8884d8"
+                  stroke="#ffa100"
                   name="Mood"
                   strokeWidth={2}
                   dot={{ fill: '#8884d8', r: 6 }}

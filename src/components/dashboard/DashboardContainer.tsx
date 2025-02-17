@@ -1,6 +1,12 @@
+import { TiWeatherPartlySunny } from 'react-icons/ti'
+import { WiRaindrops } from 'react-icons/wi'
+import { FaWind } from 'react-icons/fa'
+import { TbDropletsFilled } from 'react-icons/tb'
 import InfoCard from '../common/InfoCard'
+import WeatherCard from '../common/WeatherCard'
 import MoodChart from './MoodChart'
 import MoodWeatherChart from './MoodWeatherChart'
+import RecentMoodEntries from './RecentMoodEntries'
 
 const DashboardContainer = () => {
   return (
@@ -26,21 +32,36 @@ const DashboardContainer = () => {
               labelClassName="text-black"
             />
           </div>
-          <div>
+          <div className="space-y-5">
             <MoodChart />
-          </div>
-          <div>
             <MoodWeatherChart />
           </div>
         </div>
 
         <div className="col-span-3 space-y-10">
-          <div className="bg-white/15 rounded-lg h-[300px] w-full p-5">
-            <h2 className="text-lg font-medium">Weather Today</h2>
+          <div className="bg-gradient-to-b from-[#87CEEB] to-[#6495ED] rounded-lg h-[320px] w-full p-5 center flex-col justify-between">
+            <p>Monday, 17th February, 2025</p>
+            <p>Birmingham, UK</p>
+            <TiWeatherPartlySunny size={80} />
+            <small>Partly Cloudy</small>
+            <h2 className="text-4xl font-semibold">
+              2<sup>°</sup>
+            </h2>
+            <div className="grid grid-cols-3 place-items-center bg-background/80 rounded-xl w-full py-2">
+              <WeatherCard title="Wind" subtitle="5mph" Icon={FaWind} />
+              <WeatherCard
+                title="Humidity"
+                subtitle="70%"
+                Icon={TbDropletsFilled}
+              />
+              <WeatherCard
+                title="Feels Like"
+                subtitle="-1°"
+                Icon={WiRaindrops}
+              />
+            </div>
           </div>
-          <div className="bg-white text-accent rounded-lg h-[calc(80vh-300px)] w-full p-5">
-            <h2 className="text-lg font-medium">Recent Entries</h2>
-          </div>
+          <RecentMoodEntries />
         </div>
       </div>
     </div>
