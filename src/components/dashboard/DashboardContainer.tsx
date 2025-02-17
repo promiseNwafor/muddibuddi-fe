@@ -1,5 +1,6 @@
 import InfoCard from '../common/InfoCard'
 import MoodChart from './MoodChart'
+import MoodWeatherChart from './MoodWeatherChart'
 
 const DashboardContainer = () => {
   return (
@@ -25,16 +26,11 @@ const DashboardContainer = () => {
               labelClassName="text-black"
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <MoodChart />
-            </div>
-            <div>
-              <MoodChart />
-            </div>
-          </div>
           <div>
             <MoodChart />
+          </div>
+          <div>
+            <MoodWeatherChart />
           </div>
         </div>
 
