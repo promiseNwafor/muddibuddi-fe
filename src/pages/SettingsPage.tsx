@@ -1,5 +1,7 @@
+import SettingsContainer from '@/components/settings/SettingsContainer'
+
 const SettingsPage = () => {
-  return <div>SettingsPage</div>
+  return <SettingsContainer />
 }
 
 export default SettingsPage

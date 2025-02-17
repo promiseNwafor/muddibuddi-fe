@@ -42,7 +42,8 @@ const AddEntryContainer = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background space-y-5">
+      <h1 className="text-3xl font-bold ">Add New Entry</h1>
       <div className="mx-auto">
         <Card className="bg-background border-primary/25">
           <CardHeader>

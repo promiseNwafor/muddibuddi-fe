@@ -12,7 +12,8 @@ import AddButton from '../common/AddButton'
 const DashboardContainer = () => {
   return (
     <div className="h-auto min-h-[82vh] space-y-5">
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold ">Dashboard</h1>
         <AddButton className="bg-white/85">Add New Entry</AddButton>
       </div>
       <div className="grid lg:grid-cols-10 gap-6">

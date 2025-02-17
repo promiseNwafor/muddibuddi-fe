@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Select,
@@ -91,7 +91,7 @@ const MoodAnalyticsDashboard = () => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white p-4 border rounded shadow">
+        <div className="bg-white text-accent p-4 border rounded shadow">
           <p className="text-sm">Date: {label}</p>
           <p className="text-sm">Mood: {payload[0].payload.mood}</p>
           <p className="text-sm">Temperature: {payload[1].value}°F</p>
@@ -104,9 +104,9 @@ const MoodAnalyticsDashboard = () => {
   return (
     <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Mood Analytics Dashboard</h1>
+        <h1 className="text-3xl font-bold">Mood Analytics</h1>
         <Select defaultValue={timeRange} onValueChange={setTimeRange}>
-          <SelectTrigger className="w-32">
+          <SelectTrigger className="w-32 bg-primary text-accent">
             <SelectValue placeholder="Time Range" />
           </SelectTrigger>
           <SelectContent>
@@ -119,7 +119,7 @@ const MoodAnalyticsDashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Mood Trend Over Time */}
-        <Card className="col-span-2">
+        <Card className="col-span-2 bg-[#0f0f1a] border-primary/25">
           <CardHeader>
             <CardTitle>Mood Trend Over Time</CardTitle>
           </CardHeader>
@@ -165,7 +165,7 @@ const MoodAnalyticsDashboard = () => {
         </Card>
 
         {/* Weather Correlation */}
-        <Card>
+        <Card className="col-span-2 lg:col-span-1 bg-primary">
           <CardHeader>
             <CardTitle>Weather Impact on Mood</CardTitle>
           </CardHeader>
@@ -176,7 +176,7 @@ const MoodAnalyticsDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="weather" />
                   <YAxis />
-                  <Tooltip />
+                  <Tooltip contentStyle={{ color: '#0f0f1a' }} />
                   <Legend />
                   <Bar
                     dataKey="moodCount"
@@ -190,7 +190,7 @@ const MoodAnalyticsDashboard = () => {
         </Card>
 
         {/* Mood Distribution */}
-        <Card>
+        <Card className="col-span-2 lg:col-span-1 border-primary/25 bg-[#0f0f1a]">
           <CardHeader>
             <CardTitle>Mood Distribution</CardTitle>
           </CardHeader>
@@ -222,7 +222,7 @@ const MoodAnalyticsDashboard = () => {
         </Card>
 
         {/* Mood Patterns */}
-        <Card className="col-span-2">
+        <Card className="col-span-2 border-primary/25 bg-[#0f0f1a]">
           <CardHeader>
             <CardTitle>Mood Patterns Analysis</CardTitle>
           </CardHeader>
@@ -233,10 +233,13 @@ const MoodAnalyticsDashboard = () => {
                 <TabsTrigger value="time">Time of Day</TabsTrigger>
                 <TabsTrigger value="day">Day of Week</TabsTrigger>
               </TabsList>
-              <TabsContent value="weather" className="h-80">
+              <TabsContent value="weather" className="h-80 overflow-y-scroll">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {weatherCorrelation.map((item) => (
-                    <div key={item.weather} className="p-4 border rounded">
+                    <div
+                      key={item.weather}
+                      className="p-4 border rounded border-primary/25"
+                    >
                       <h3 className="font-semibold">{item.weather}</h3>
                       <p>Most Common Mood: {item.mostFrequentMood}</p>
                       <p>Total Entries: {item.moodCount}</p>
@@ -244,12 +247,12 @@ const MoodAnalyticsDashboard = () => {
                   ))}
                 </div>
               </TabsContent>
-              <TabsContent value="time">
+              <TabsContent value="time" className="h-80">
                 <div className="p-4 text-center text-gray-500">
                   Time of day analysis coming soon
                 </div>
               </TabsContent>
-              <TabsContent value="day">
+              <TabsContent value="day" className="h-80">
                 <div className="p-4 text-center text-gray-500">
                   Day of week analysis coming soon
                 </div>
