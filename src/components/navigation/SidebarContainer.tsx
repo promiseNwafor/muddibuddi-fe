@@ -41,7 +41,7 @@ const SidebarContainer = () => {
             className={({ isActive }) =>
               cn(
                 'flex items-center gap-2 p-4 py-3 text-sm text-primary font-medium rounded-lg hover:bg-secondary',
-                isActive && 'bg-primary-light text-primary',
+                isActive && 'bg-secondary text-primary',
               )
             }
             onClick={() => (smallScreen ? toggleSheet() : null)}
@@ -79,7 +79,7 @@ const SidebarContainer = () => {
 
         <div className="w-60 h-screen hidden lg:block">
           <div className="h-20 p-7 center justify-start">
-            <NavLink to="/" className="text-xl text-secondary">
+            <NavLink to="/" className="text-xl">
               MoodiBuddi
             </NavLink>
           </div>

@@ -7,12 +7,16 @@ import WeatherCard from '../common/WeatherCard'
 import MoodChart from './MoodChart'
 import MoodWeatherChart from './MoodWeatherChart'
 import RecentMoodEntries from './RecentMoodEntries'
+import AddButton from '../common/AddButton'
 
 const DashboardContainer = () => {
   return (
-    <div className="h-auto min-h-[82vh]">
-      <div className="grid grid-cols-10 gap-6">
-        <div className="col-span-7 grid gap-5">
+    <div className="h-auto min-h-[82vh] space-y-5">
+      <div className="flex justify-end">
+        <AddButton className="bg-white/85">Add New Entry</AddButton>
+      </div>
+      <div className="grid lg:grid-cols-10 gap-6">
+        <div className="lg:col-span-7 grid gap-5">
           <div className="grid grid-cols-3 gap-5">
             <InfoCard
               label="Total Streak"
@@ -38,10 +42,12 @@ const DashboardContainer = () => {
           </div>
         </div>
 
-        <div className="col-span-3 space-y-10">
+        <div className="lg:col-span-3 space-y-10">
           <div className="bg-gradient-to-b from-[#87CEEB] to-[#6495ED] rounded-lg h-[320px] w-full p-5 center flex-col justify-between">
-            <p>Monday, 17th February, 2025</p>
-            <p>Birmingham, UK</p>
+            <p className="text-sm xl:text-base text-center">
+              Monday, 17th February, 2025
+            </p>
+            <p className="text-sm xl:text-base text-center">Birmingham, UK</p>
             <TiWeatherPartlySunny size={80} />
             <small>Partly Cloudy</small>
             <h2 className="text-4xl font-semibold">

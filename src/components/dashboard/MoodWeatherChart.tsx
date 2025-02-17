@@ -195,69 +195,71 @@ const MoodWeatherChart = () => {
   }
 
   return (
-    <Card className="bg-white text-accent">
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <CardTitle>Mood and Weather Correlation</CardTitle>
-          <select
-            value={period}
-            onChange={(e) => setPeriod(e.target.value as PERIOD)}
-            className="border rounded p-2 text-sm bg-white"
-          >
-            <option value={PERIOD.WEEK}>Last Week</option>
-            <option value={PERIOD.TWO_WEEKS}>Last 2 Weeks</option>
-            <option value={PERIOD.MONTH}>Last Month</option>
-            <option value={PERIOD.THREE_MONTHS}>Last 3 Months</option>
-          </select>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="h-64">
-          <ResponsiveContainer width="100%" height="100%">
-            <ComposedChart data={filteredData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={formatDate}
-                interval="preserveStartEnd"
-              />
-              <YAxis
-                yAxisId="mood"
-                domain={[0, 5]}
-                ticks={[1, 2, 3, 4, 5]}
-                tickFormatter={(value) =>
-                  moodScale[value as keyof typeof moodScale] || value
-                }
-              />
-              <YAxis
-                yAxisId="temperature"
-                orientation="right"
-                domain={[0, 30]}
-                tickFormatter={(value) => `${value}°C`}
-              />
-              <Tooltip content={CustomTooltip} />
-              <Legend />
-              <Bar
-                yAxisId="mood"
-                dataKey="avgMood"
-                fill="#8884d8"
-                name="Average Mood"
-                barSize={20}
-              />
-              <Line
-                yAxisId="temperature"
-                type="monotone"
-                dataKey="temperature"
-                stroke="#ff7300"
-                name="Temperature"
-                strokeWidth={2}
-                dot={{ fill: '#ff7300', r: 4 }}
-              />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="">
+      <Card className="bg-white text-accent">
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <CardTitle>Mood and Weather Correlation</CardTitle>
+            <select
+              value={period}
+              onChange={(e) => setPeriod(e.target.value as PERIOD)}
+              className="border rounded p-2 text-sm bg-white"
+            >
+              <option value={PERIOD.WEEK}>Last Week</option>
+              <option value={PERIOD.TWO_WEEKS}>Last 2 Weeks</option>
+              <option value={PERIOD.MONTH}>Last Month</option>
+              <option value={PERIOD.THREE_MONTHS}>Last 3 Months</option>
+            </select>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={filteredData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={formatDate}
+                  interval="preserveStartEnd"
+                />
+                <YAxis
+                  yAxisId="mood"
+                  domain={[0, 5]}
+                  ticks={[1, 2, 3, 4, 5]}
+                  tickFormatter={(value) =>
+                    moodScale[value as keyof typeof moodScale] || value
+                  }
+                />
+                <YAxis
+                  yAxisId="temperature"
+                  orientation="right"
+                  domain={[0, 30]}
+                  tickFormatter={(value) => `${value}°C`}
+                />
+                <Tooltip content={CustomTooltip} />
+                <Legend />
+                <Bar
+                  yAxisId="mood"
+                  dataKey="avgMood"
+                  fill="#8884d8"
+                  name="Average Mood"
+                  barSize={20}
+                />
+                <Line
+                  yAxisId="temperature"
+                  type="monotone"
+                  dataKey="temperature"
+                  stroke="#ffa100"
+                  name="Temperature"
+                  strokeWidth={2}
+                  dot={{ fill: '#ffa100', r: 4 }}
+                />
+              </ComposedChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
 

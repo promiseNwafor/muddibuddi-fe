@@ -14,3 +14,23 @@ export const LoginSchema = z.object({
 })
 
 export type LoginFormValues = z.infer<typeof LoginSchema>
+
+export const MoodEntrySchema = z.object({
+  description: z
+    .string()
+    .min(10, 'Please describe your mood or event in at least 10 characters')
+    .max(500, 'Description must be less than 500 characters'),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Please enter a valid date')
+    .refine((date) => {
+      const selectedDate = new Date(date)
+      const today = new Date()
+      return selectedDate <= today
+    }, 'Date cannot be in the future'),
+  time: z
+    .string()
+    .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Please enter a valid time'),
+})
+
+export type MoodEntryFormValues = z.infer<typeof MoodEntrySchema>

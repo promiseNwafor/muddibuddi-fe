@@ -13,12 +13,12 @@ type ISideBarItems = {
 export const sideBarItems: ISideBarItems[] = [
   {
     displayName: 'Dashboard',
-    path: '/',
+    path: '/dashboard',
     Icon: RxDashboard,
   },
   {
-    displayName: 'Track',
-    path: '/track',
+    displayName: 'Add Entry',
+    path: '/add-entry',
     Icon: PiUsersThreeBold,
   },
   {

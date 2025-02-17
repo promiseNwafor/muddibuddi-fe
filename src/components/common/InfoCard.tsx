@@ -16,19 +16,19 @@ const InfoCard: React.FC<InfoCardProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col justify-evenly p-4 pl-10 bg-white rounded-lg h-36',
+        'flex flex-col justify-evenly p-4 lg:pl-10 bg-white rounded-lg lg:h-36',
         className,
       )}
     >
       <p
         className={cn(
-          'text-light-grey text-xs tracking-tighter font-medium',
+          'text-light-grey text-xs tracking-tighter lg:font-medium',
           labelClassName,
         )}
       >
         {label}
       </p>
-      <p className="font-semibold text-3xl">{title}</p>
+      <p className="font-semibold lg:text-3xl">{title}</p>
     </div>
   )
 }

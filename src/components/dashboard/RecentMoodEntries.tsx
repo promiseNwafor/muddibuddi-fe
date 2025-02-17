@@ -57,13 +57,13 @@ const RecentMoodEntries = () => {
   return (
     <div className="bg-white border border-white/25 text-accent rounded-lg max-h-[calc(95.5%-300px)] w-full p-5 space-y-4">
       <h2 className="text-lg font-medium">Recent Entries</h2>
-      <div className="space-y-4 overflow-y-scroll h-[475px]">
+      <div className="space-y-4 overflow-y-scroll h-[500px]">
         {entries.map((entry) => (
           <div
             key={`${entry.date}-${entry.time}`}
-            className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors"
+            className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors overflow-x-scroll"
           >
-            <div className="flex items-start justify-between">
+            <div className="flex items-start justify-between min-w-[200px]">
               <div className="flex items-start space-x-3">
                 <Calendar className="h-5 w-5 text-gray-500 mt-1" />
                 <div>
