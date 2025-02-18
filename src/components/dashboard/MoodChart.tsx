@@ -13,8 +13,13 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import { formatDate } from '@/lib/utils'
+import { ContentType } from 'recharts/types/component/Tooltip'
+import {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent'
 
-interface DataPoint {
+export interface DataPoint {
   date: string
   mood: string
   moodValue: number
@@ -24,7 +29,7 @@ type MoodScale = {
   [key: number]: string
 }
 
-interface CustomTooltipProps {
+export interface CustomTooltipProps {
   active?: boolean
   payload?: Array<{
     payload: DataPoint
@@ -74,66 +79,76 @@ const MoodChart = () => {
   }
 
   return (
-    <div className="overflow-x-scroll">
-      <Card className="bg-transparent border-white/25">
-        <CardHeader>
-          <CardTitle className="flex justify-between items-center">
-            <span>Past Week Mood</span>
-            <select
-              value={chartType}
-              onChange={(e) => setChartType(e.target.value as ChartType)}
-              className="border rounded p-1 px-3 text-accent"
-            >
-              {Object.values(ChartType).map((type) => (
-                <option key={type} value={type} className="capitalize">
-                  {type} chart
-                </option>
-              ))}
-            </select>
-          </CardTitle>
-        </CardHeader>
+    <div className="overflow-x-auto">
+      <div className="min-w-[500px]">
+        <Card className="bg-transparent border-white/25">
+          <CardHeader>
+            <CardTitle className="flex justify-between items-center">
+              <span>Past Week Mood</span>
+              <select
+                value={chartType}
+                onChange={(e) => setChartType(e.target.value as ChartType)}
+                className="border rounded p-1 px-3 text-accent"
+              >
+                {Object.values(ChartType).map((type) => (
+                  <option key={type} value={type} className="capitalize">
+                    {type} chart
+                  </option>
+                ))}
+              </select>
+            </CardTitle>
+          </CardHeader>
 
-        <CardContent>
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              {chartType === 'line' ? (
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" tickFormatter={formatDate} />
-                  <YAxis
-                    domain={[0, 5]}
-                    ticks={[1, 2, 3, 4, 5]}
-                    tickFormatter={formatYAxis}
-                  />
-                  <Tooltip content={CustomTooltip} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="moodValue"
-                    stroke="#ffa100"
-                    name="Mood"
-                    strokeWidth={2}
-                    dot={{ fill: '#8884d8', r: 6 }}
-                  />
-                </LineChart>
-              ) : (
-                <BarChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" tickFormatter={formatDate} />
-                  <YAxis
-                    domain={[0, 5]}
-                    ticks={[1, 2, 3, 4, 5]}
-                    tickFormatter={formatYAxis}
-                  />
-                  <Tooltip content={CustomTooltip} />
-                  <Legend />
-                  <Bar dataKey="moodValue" fill="#8884d8" name="Mood" />
-                </BarChart>
-              )}
-            </ResponsiveContainer>
-          </div>
-        </CardContent>
-      </Card>
+          <CardContent>
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                {chartType === 'line' ? (
+                  <LineChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" tickFormatter={formatDate} />
+                    <YAxis
+                      domain={[0, 5]}
+                      ticks={[1, 2, 3, 4, 5]}
+                      tickFormatter={formatYAxis}
+                    />
+                    <Tooltip
+                      content={
+                        CustomTooltip as ContentType<ValueType, NameType>
+                      }
+                    />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="moodValue"
+                      stroke="#ffa100"
+                      name="Mood"
+                      strokeWidth={2}
+                      dot={{ fill: '#8884d8', r: 6 }}
+                    />
+                  </LineChart>
+                ) : (
+                  <BarChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" tickFormatter={formatDate} />
+                    <YAxis
+                      domain={[0, 5]}
+                      ticks={[1, 2, 3, 4, 5]}
+                      tickFormatter={formatYAxis}
+                    />
+                    <Tooltip
+                      content={
+                        CustomTooltip as ContentType<ValueType, NameType>
+                      }
+                    />
+                    <Legend />
+                    <Bar dataKey="moodValue" fill="#8884d8" name="Mood" />
+                  </BarChart>
+                )}
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

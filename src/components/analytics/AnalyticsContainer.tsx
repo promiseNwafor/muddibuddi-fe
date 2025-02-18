@@ -23,6 +23,17 @@ import {
   ComposedChart,
   Line,
 } from 'recharts'
+import { DataPoint } from '../dashboard/MoodChart'
+
+interface CustomTooltipProps {
+  active?: boolean
+  payload?: Array<{
+    name: string
+    value: number
+    payload: DataPoint
+  }>
+  label?: string
+}
 
 const MoodAnalyticsDashboard = () => {
   const [timeRange, setTimeRange] = useState('month')
@@ -88,7 +99,11 @@ const MoodAnalyticsDashboard = () => {
     { name: 'Depressed', value: 5, color: '#FF99FF' },
   ]
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip: React.FC<CustomTooltipProps> = ({
+    active,
+    payload,
+    label,
+  }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white text-accent p-4 border rounded shadow">

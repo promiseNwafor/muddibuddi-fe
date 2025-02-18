@@ -1,5 +1,5 @@
-import React from 'react'
-import { Bell, User, Shield, Sun, CloudRain } from 'lucide-react'
+import { useState } from 'react'
+import { Bell, User, Shield, CloudRain } from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -15,15 +15,14 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
-import { Switch } from '../ui/switch'
+import { Switch } from '@/components/ui/switch'
 
 const SettingsContainer = () => {
-  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true)
-  const [theme, setTheme] = React.useState('system')
-  const [weatherUnit, setWeatherUnit] = React.useState('celsius')
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+  const [weatherUnit, setWeatherUnit] = useState('celsius')
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 min-h-screen">
       <h1 className="text-3xl font-bold ">Settings</h1>
 
       <div className="grid lg:grid-cols-2 gap-5">
@@ -88,36 +87,6 @@ const SettingsContainer = () => {
         </Card>
       </div>
 
-      {/* Display Settings */}
-      <Card className="bg-[#0f0f1a]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sun className="h-5 w-5" />
-            Display Settings
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="font-medium">Theme</p>
-              <p className="text-sm text-gray-500">
-                Choose your preferred theme
-              </p>
-            </div>
-            <Select value={theme} onValueChange={setTheme}>
-              <SelectTrigger className="w-32">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-      </Card>
-
       <div className="grid lg:grid-cols-2 gap-5">
         {/* Weather Settings */}
         <Card className="bg-primary text-accent">
@@ -152,7 +121,11 @@ const SettingsContainer = () => {
                   Allow automatic weather updates based on location
                 </p>
               </div>
-              <Switch defaultChecked />
+              <Switch
+                className="bg-secondary"
+                style={{ background: '#ffa100' }}
+                defaultChecked
+              />
             </div>
           </CardContent>
         </Card>

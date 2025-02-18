@@ -45,7 +45,7 @@ const AddEntryContainer = () => {
     <div className="min-h-screen bg-background space-y-5">
       <h1 className="text-3xl font-bold ">Add New Entry</h1>
       <div className="mx-auto">
-        <Card className="bg-background border-primary/25">
+        <Card className="bg-primary text-accent border-accent">
           <CardHeader>
             <CardTitle>How are you feeling?</CardTitle>
           </CardHeader>
@@ -69,7 +69,7 @@ const AddEntryContainer = () => {
                       <FormControl>
                         <Textarea
                           placeholder="Describe how you're feeling or what happened today. For example: 'I had a great presentation at work and my colleagues loved it!' or 'Feeling overwhelmed with deadlines approaching'"
-                          className="min-h-[200px] border-primary/15"
+                          className="min-h-[200px] border-accent/45"
                           {...field}
                         />
                       </FormControl>
@@ -93,7 +93,7 @@ const AddEntryContainer = () => {
                         <FormControl>
                           <Input
                             type="date"
-                            className="border-primary/15"
+                            className="border-accent/45"
                             {...field}
                           />
                         </FormControl>
@@ -116,7 +116,7 @@ const AddEntryContainer = () => {
                         <FormControl>
                           <Input
                             type="time"
-                            className="border-primary/15"
+                            className="border-accent/45"
                             {...field}
                           />
                         </FormControl>
@@ -126,9 +126,11 @@ const AddEntryContainer = () => {
                   />
                 </div>
 
-                <Button type="submit" variant="secondary">
-                  Save Entry
-                </Button>
+                <div className="flex justify-end">
+                  <Button type="submit" variant="secondary">
+                    Save Entry
+                  </Button>
+                </div>
               </form>
             </Form>
           </CardContent>
