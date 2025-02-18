@@ -28,61 +28,59 @@ import { DataPoint } from '../dashboard/MoodChart'
 interface CustomTooltipProps {
   active?: boolean
   payload?: Array<{
-    name: string
     value: number
     payload: DataPoint
   }>
   label?: string
 }
 
+const moodData = [
+  {
+    date: '2024-02-10',
+    mood: 'Happy',
+    moodScore: 4,
+    weather: 'Sunny',
+    temperature: 75,
+  },
+  {
+    date: '2024-02-11',
+    mood: 'Neutral',
+    moodScore: 3,
+    weather: 'Cloudy',
+    temperature: 65,
+  },
+  {
+    date: '2024-02-12',
+    mood: 'Sad',
+    moodScore: 2,
+    weather: 'Rainy',
+    temperature: 60,
+  },
+  {
+    date: '2024-02-13',
+    mood: 'Overjoyed',
+    moodScore: 5,
+    weather: 'Sunny',
+    temperature: 72,
+  },
+  {
+    date: '2024-02-14',
+    mood: 'Happy',
+    moodScore: 4,
+    weather: 'Sunny',
+    temperature: 70,
+  },
+  {
+    date: '2024-02-15',
+    mood: 'Neutral',
+    moodScore: 3,
+    weather: 'Cloudy',
+    temperature: 68,
+  },
+]
+
 const MoodAnalyticsDashboard = () => {
   const [timeRange, setTimeRange] = useState('month')
-
-  // Sample data with mood terms
-  const moodData = [
-    {
-      date: '2024-02-10',
-      mood: 'Happy',
-      moodScore: 4,
-      weather: 'Sunny',
-      temperature: 75,
-    },
-    {
-      date: '2024-02-11',
-      mood: 'Neutral',
-      moodScore: 3,
-      weather: 'Cloudy',
-      temperature: 65,
-    },
-    {
-      date: '2024-02-12',
-      mood: 'Sad',
-      moodScore: 2,
-      weather: 'Rainy',
-      temperature: 60,
-    },
-    {
-      date: '2024-02-13',
-      mood: 'Overjoyed',
-      moodScore: 5,
-      weather: 'Sunny',
-      temperature: 72,
-    },
-    {
-      date: '2024-02-14',
-      mood: 'Happy',
-      moodScore: 4,
-      weather: 'Sunny',
-      temperature: 70,
-    },
-    {
-      date: '2024-02-15',
-      mood: 'Neutral',
-      moodScore: 3,
-      weather: 'Cloudy',
-      temperature: 68,
-    },
-  ]
 
   const weatherCorrelation = [
     { weather: 'Sunny', mostFrequentMood: 'Happy', moodCount: 45 },
