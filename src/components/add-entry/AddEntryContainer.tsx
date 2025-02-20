@@ -1,7 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
 import { useForm } from 'react-hook-form'
-import { Calendar, Pencil } from 'lucide-react'
-import { MoodEntryFormValues, MoodEntrySchema } from '@/utils/schema'
+import { CalendarIcon, ClockIcon, Pencil } from 'lucide-react'
+
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   Form,
@@ -11,29 +15,33 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
-
-// Updated schema for the new form structure
+import { Input } from '@/components/ui/input'
+import { MoodEntryFormValues, MoodEntrySchema } from '@/utils/schema'
 
 const AddEntryContainer = () => {
   const form = useForm<MoodEntryFormValues>({
     resolver: zodResolver(MoodEntrySchema),
     defaultValues: {
       moodText: '',
-      dateTime: new Date().toISOString().slice(0, 16), // Format: "2025-02-15T14:48"
+      time: format(new Date(), 'HH:mm'),
     },
   })
 
-  const onSubmit = async (values: MoodEntryFormValues) => {
+  const onSubmit = (values: MoodEntryFormValues) => {
     try {
-      // Convert the datetime to ISO format with seconds and milliseconds
-      const entryDateTime = new Date(values.dateTime).toISOString()
+      const dateTime = new Date(values.date)
+      const [hours, minutes] = values.time.split(':')
+      dateTime.setHours(parseInt(hours, 10), parseInt(minutes, 10))
 
       const formattedValues = {
         moodText: values.moodText,
-        entryDateTime,
+        entryDateTime: dateTime.toISOString(),
       }
 
       console.log('Form submitted:', formattedValues)
@@ -80,28 +88,63 @@ const AddEntryContainer = () => {
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="dateTime"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        <span className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4" />
-                          Date and Time
-                        </span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="datetime-local"
-                          className="border-accent/45"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>Date</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant={'outline'}
+                                className={cn(
+                                  'w-full pl-3 text-left font-normal bg-transparent',
+                                  !field.value && 'text-muted-foreground',
+                                )}
+                              >
+                                {field.value ? (
+                                  format(field.value, 'PPP')
+                                ) : (
+                                  <span>Pick a date</span>
+                                )}
+                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="time"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <FormLabel>Time</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <Input type="time" className="pl-8" {...field} />
+                            <ClockIcon className="absolute left-2 top-2.5 h-4 w-4 opacity-50" />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <div className="flex justify-end">
                   <Button type="submit" variant="secondary">

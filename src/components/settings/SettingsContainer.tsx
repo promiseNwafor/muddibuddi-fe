@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
+import { Input } from '../ui/input'
 
 const SettingsContainer = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
@@ -37,14 +38,14 @@ const SettingsContainer = () => {
           <CardContent className="space-y-4">
             <div className="flex flex-col space-y-2">
               <label className="font-medium">Email Address</label>
-              <input
+              <Input
                 type="email"
                 className="p-2 border rounded-md"
                 value="user@example.com"
                 disabled
               />
             </div>
-            <Button className="bg-background text-primary">
+            <Button className="bg-background hover:bg-background/90 text-primary">
               Change Password
             </Button>
           </CardContent>
