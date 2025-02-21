@@ -20,16 +20,28 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { useAppDispatch, useAppSelector } from '@/hooks/useApp'
+import { login } from '@/services/user/userSlice'
+import { ROUTES } from '@/routes'
 
 const LoginContainer = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { isLoading } = useAppSelector((state) => state.user)
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
   })
 
-  const handleSubmit = (values: LoginFormValues) => {
-    console.log(values)
+  const handleSubmit = async (values: LoginFormValues) => {
+    await dispatch(
+      login({
+        email: values.email,
+        password: values.password,
+      }),
+    ).unwrap()
+
+    navigate(ROUTES.DASHBOARD)
   }
 
   return (
@@ -86,11 +98,7 @@ const LoginContainer = () => {
                 <Button type="submit" variant="full">
                   Submit
                 </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full"
-                  onClick={() => navigate('/dashboard')}
-                >
+                <Button variant="ghost" className="w-full" disabled={isLoading}>
                   <FcGoogle />
                   Login with Google
                 </Button>
