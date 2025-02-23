@@ -8,11 +8,12 @@ import MoodChart from './MoodChart'
 import MoodWeatherChart from './MoodWeatherChart'
 import RecentMoodEntries from './RecentMoodEntries'
 import AddButton from '../common/AddButton'
-import { useAppSelector } from '@/hooks/useApp'
+import { useGetUserQuery } from '@/services/user/userQuery'
 
 const DashboardContainer = () => {
-  const data = useAppSelector((state) => state.user)
-  console.log('++++++++++++++', data)
+  const { data: user } = useGetUserQuery()
+
+  console.log('++++++++++++++', user)
 
   return (
     <div className="h-auto min-h-[82vh] space-y-5">

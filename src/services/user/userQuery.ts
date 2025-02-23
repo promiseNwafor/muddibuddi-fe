@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { RootState } from '@/store'
 import { apiUrl } from '@/utils'
-import { ApiResponse, LoginResponse, RegisterRequest, User } from '@/types'
+import { ApiResponse, LoginResponse, User } from '@/types'
 import { LoginFormValues, UserFormValues } from '@/utils/schema'
 
 export const userQuery = createApi({
@@ -25,7 +25,7 @@ export const userQuery = createApi({
         body: credentials,
       }),
     }),
-    register: builder.mutation<ApiResponse<UserFormValues>, RegisterRequest>({
+    register: builder.mutation<ApiResponse<UserFormValues>, UserFormValues>({
       query: (user) => ({
         url: 'auth/register',
         method: 'POST',
@@ -33,7 +33,7 @@ export const userQuery = createApi({
       }),
     }),
     getUser: builder.query<User, void>({
-      query: () => 'auth/user',
+      query: () => 'user/data',
     }),
   }),
 })

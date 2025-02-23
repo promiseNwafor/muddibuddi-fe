@@ -18,6 +18,7 @@ export const userSlice = createSlice({
       state.isAuthenticated = false
       state.token = null
       localStorage.removeItem('token')
+      window.location.href = '/login'
     },
     setToken: (state, action) => {
       state.token = action.payload
