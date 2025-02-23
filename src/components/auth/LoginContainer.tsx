@@ -40,7 +40,6 @@ const LoginContainer = () => {
   const handleSubmit = async (values: LoginFormValues) => {
     try {
       const res = await login(values).unwrap()
-      console.log('++++++++++++++', res)
 
       dispatch(setToken(res.token))
 

@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
 import { useNavigate } from 'react-router-dom'
 import { UserFormValues, UserSchema } from '@/utils/schema'
-import { useAppDispatch, useAppSelector } from '@/hooks/useApp'
-import { register } from '@/services/user/userSlice'
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -25,11 +23,11 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { ROUTES } from '@/utils'
+import { useRegisterMutation } from '@/services/user/userQuery'
 
 const RegisterContainer = () => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  const { isLoading } = useAppSelector((state) => state.user)
+  const [register, { isLoading }] = useRegisterMutation()
 
   const form = useForm<UserFormValues>({
     resolver: zodResolver(UserSchema),
@@ -37,15 +35,8 @@ const RegisterContainer = () => {
 
   const handleSubmit = async (values: UserFormValues) => {
     try {
-      await dispatch(
-        register({
-          username: values.username,
-          email: values.email,
-          password: values.password,
-        }),
-      ).unwrap()
+      await register(values).unwrap()
 
-      form.reset()
       navigate(ROUTES.LOGIN, { replace: true })
     } catch (error) {
       console.error('Registration failed:', error)
