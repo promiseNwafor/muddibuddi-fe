@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom'
+import { toast } from 'sonner'
 import { useAppSelector } from '@/hooks/useApp'
 import { useGetUserQuery } from '@/services/user/userQuery'
 
@@ -9,15 +10,17 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation()
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated)
-  const { isLoading, error } = useGetUserQuery()
-
-  console.log('++++++++++++++', error)
+  const { isLoading, error, isError } = useGetUserQuery()
 
   if (isLoading) {
     return <div>Loading...</div>
   }
 
-  if (!isAuthenticated) {
+  if (error) {
+    return toast.error(`Something went wrong ${error}`)
+  }
+
+  if (!isAuthenticated && isError) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
 

@@ -34,6 +34,8 @@ export const userQuery = createApi({
     }),
     getUser: builder.query<User, void>({
       query: () => 'user/data',
+      transformResponse: async (response: Promise<ApiResponse<User>>) =>
+        (await response).data,
     }),
   }),
 })
