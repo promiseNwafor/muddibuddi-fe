@@ -1,3 +1,5 @@
+export const apiUrl = 'http://localhost:8000/'
+
 export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',

@@ -24,7 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ROUTES } from '@/routes'
+import { ROUTES } from '@/utils'
 
 const RegisterContainer = () => {
   const navigate = useNavigate()
@@ -46,7 +46,7 @@ const RegisterContainer = () => {
       ).unwrap()
 
       form.reset()
-      navigate(ROUTES.LOGIN)
+      navigate(ROUTES.LOGIN, { replace: true })
     } catch (error) {
       console.error('Registration failed:', error)
     }
