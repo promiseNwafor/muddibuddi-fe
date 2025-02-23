@@ -11,7 +11,6 @@ export const handlers = [
       return HttpResponse.json({
         user: {
           id: '1',
-          name: 'Test User',
           email: 'test@example.com',
         },
         token: 'fake-jwt-token',
@@ -31,13 +30,14 @@ export const handlers = [
       username: string
     }
 
-    if (email && password && name) {
+    if (email && password && username) {
       return HttpResponse.json(
         {
           user: {
             id: '1',
             username,
             email,
+            password,
           },
           token: 'fake-jwt-token',
         },

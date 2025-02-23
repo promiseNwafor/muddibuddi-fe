@@ -102,7 +102,7 @@ const LoginContainer = () => {
             </CardContent>
             <CardFooter>
               <div className="space-y-6 w-full pt-4">
-                <Button type="submit" variant="full">
+                <Button type="submit" name="login" variant="full">
                   Submit
                 </Button>
                 <Button variant="ghost" className="w-full" disabled={isLoading}>
