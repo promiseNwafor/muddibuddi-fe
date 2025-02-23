@@ -10,17 +10,20 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const location = useLocation()
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated)
-  const { isLoading, error, isError } = useGetUserQuery()
+  const { isLoading, error } = useGetUserQuery()
 
   if (isLoading) {
     return <div>Loading...</div>
   }
 
   if (error) {
-    return toast.error(`Something went wrong ${error}`)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    toast.error(`Something went wrong! ${error.error}`)
+    return <Navigate to="/login" state={{ from: location }} replace />
   }
 
-  if (!isAuthenticated && isError) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
 
