@@ -2,18 +2,20 @@ import { TiWeatherPartlySunny } from 'react-icons/ti'
 import { WiRaindrops } from 'react-icons/wi'
 import { FaWind } from 'react-icons/fa'
 import { TbDropletsFilled } from 'react-icons/tb'
+import { useGetUserQuery } from '@/services/user/userQuery'
+import { useGetMoodEntriesQuery } from '@/services/mood/moodQuery'
 import InfoCard from '../common/InfoCard'
+import AddButton from '../common/AddButton'
 import WeatherCard from '../common/WeatherCard'
 import MoodChart from './MoodChart'
 import MoodWeatherChart from './MoodWeatherChart'
 import RecentMoodEntries from './RecentMoodEntries'
-import AddButton from '../common/AddButton'
-import { useGetUserQuery } from '@/services/user/userQuery'
 
 const DashboardContainer = () => {
   const { data: user } = useGetUserQuery()
+  const { data: moodEntries } = useGetMoodEntriesQuery()
 
-  console.log('++++++++++++++', user)
+  console.log('++++++++++++++', { moodEntries, user })
 
   return (
     <div className="h-auto min-h-[82vh] space-y-5">

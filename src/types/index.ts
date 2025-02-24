@@ -1,4 +1,10 @@
-export type User = {
+export interface ApiResponse<T> {
+  message: string
+  success: boolean
+  data: T
+}
+
+export interface User {
   id: string
   email: string
   username: string
@@ -15,8 +21,32 @@ export interface LoginResponse {
   message: string
 }
 
-export interface ApiResponse<T> {
-  message: string
-  success: boolean
-  data: T
+export interface AddMoodValues {
+  entryDateTime: string
+  moodText: string
+}
+
+export interface Mood {
+  id: string
+  entryDateTime: Date
+  moodText: string
+  moodLabel: string
+  moodScore: number
+  summary: string
+  city: string
+  country: string
+  weatherData: WeatherData
+}
+
+export interface WeatherData {
+  id: string
+  temperature: number
+  feelsLike: number
+  humidity: number
+  pressure: number
+  windSpeed: number
+  cloudCover: number
+  precipitation: number
+  weatherType: string
+  description: string
 }
