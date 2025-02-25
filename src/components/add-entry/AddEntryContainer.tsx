@@ -1,12 +1,9 @@
-import { useForm } from 'react-hook-form'
-import { format } from 'date-fns'
-import { toast } from 'sonner'
-import { CalendarIcon, ClockIcon, Pencil } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { format } from 'date-fns'
+import { useForm } from 'react-hook-form'
+import { CalendarIcon, ClockIcon, Pencil } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import { MoodEntryFormValues, MoodEntrySchema } from '@/utils/schema'
-import { useAddMoodEntryMutation } from '@/services/mood/moodQuery'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
@@ -25,10 +22,9 @@ import {
 } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
+import { MoodEntryFormValues, MoodEntrySchema } from '@/utils/schema'
 
 const AddEntryContainer = () => {
-  const [addMoodEntry, { isLoading }] = useAddMoodEntryMutation()
-
   const form = useForm<MoodEntryFormValues>({
     resolver: zodResolver(MoodEntrySchema),
     defaultValues: {
@@ -37,7 +33,7 @@ const AddEntryContainer = () => {
     },
   })
 
-  const onSubmit = async (values: MoodEntryFormValues) => {
+  const onSubmit = (values: MoodEntryFormValues) => {
     try {
       const dateTime = new Date(values.date)
       const [hours, minutes] = values.time.split(':')
@@ -48,12 +44,10 @@ const AddEntryContainer = () => {
         entryDateTime: dateTime.toISOString(),
       }
 
-      await addMoodEntry(formattedValues).unwrap()
-      toast.success('Entry added successfully!')
+      console.log('Form submitted:', formattedValues)
       form.reset()
     } catch (error) {
       console.error('Error submitting form:', error)
-      toast.error('Something went wrong!')
     }
   }
 
@@ -107,7 +101,7 @@ const AddEntryContainer = () => {
                               <Button
                                 variant={'outline'}
                                 className={cn(
-                                  'w-full pl-3 text-left font-normal bg-transparent border-accent/45 hover:bg-transparent hover:text-background',
+                                  'w-full pl-3 text-left font-normal bg-transparent',
                                   !field.value && 'text-muted-foreground',
                                 )}
                               >
@@ -142,11 +136,7 @@ const AddEntryContainer = () => {
                         <FormLabel>Time</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Input
-                              type="time"
-                              className="pl-8 border-accent/45"
-                              {...field}
-                            />
+                            <Input type="time" className="pl-8" {...field} />
                             <ClockIcon className="absolute left-2 top-2.5 h-4 w-4 opacity-50" />
                           </div>
                         </FormControl>
@@ -157,12 +147,8 @@ const AddEntryContainer = () => {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button
-                    type="submit"
-                    variant="secondary"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Saving...' : 'Save Entry'}
+                  <Button type="submit" variant="secondary">
+                    Save Entry
                   </Button>
                 </div>
               </form>

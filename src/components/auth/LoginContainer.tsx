@@ -1,11 +1,8 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
 import { LoginFormValues, LoginSchema } from '@/utils/schema'
-import { useAppDispatch } from '@/hooks/useApp'
-import { ROUTES } from '@/utils'
-
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,32 +20,16 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useLoginMutation } from '@/services/user/userQuery'
-import { toast } from 'sonner'
-import { setToken } from '@/services/user/userSlice'
 
 const LoginContainer = () => {
   const navigate = useNavigate()
-  const location = useLocation()
-  const dispatch = useAppDispatch()
-  const [login, { isLoading }] = useLoginMutation()
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
   })
 
-  const handleSubmit = async (values: LoginFormValues) => {
-    try {
-      const res = await login(values).unwrap()
-
-      dispatch(setToken(res.token))
-
-      const from = location.state?.from?.pathname || ROUTES.DASHBOARD
-      navigate(from, { replace: true })
-    } catch (error) {
-      console.error('Login failed:', error)
-      toast.error('Something went wrong')
-    }
+  const handleSubmit = (values: LoginFormValues) => {
+    console.log(values)
   }
 
   return (
@@ -102,10 +83,14 @@ const LoginContainer = () => {
             </CardContent>
             <CardFooter>
               <div className="space-y-6 w-full pt-4">
-                <Button type="submit" name="login" variant="full">
+                <Button type="submit" variant="full">
                   Submit
                 </Button>
-                <Button variant="ghost" className="w-full" disabled={isLoading}>
+                <Button
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => navigate('/dashboard')}
+                >
                   <FcGoogle />
                   Login with Google
                 </Button>

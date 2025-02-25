@@ -2,9 +2,7 @@ import { Link } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { FcGoogle } from 'react-icons/fc'
-import { useNavigate } from 'react-router-dom'
 import { UserFormValues, UserSchema } from '@/utils/schema'
-
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,25 +20,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { ROUTES } from '@/utils'
-import { useRegisterMutation } from '@/services/user/userQuery'
 
 const RegisterContainer = () => {
-  const navigate = useNavigate()
-  const [register, { isLoading }] = useRegisterMutation()
-
   const form = useForm<UserFormValues>({
     resolver: zodResolver(UserSchema),
   })
 
-  const handleSubmit = async (values: UserFormValues) => {
-    try {
-      await register(values).unwrap()
-
-      navigate(ROUTES.LOGIN, { replace: true })
-    } catch (error) {
-      console.error('Registration failed:', error)
-    }
+  const handleSubmit = (values: UserFormValues) => {
+    console.log(values)
   }
 
   return (
@@ -93,7 +80,7 @@ const RegisterContainer = () => {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
@@ -112,7 +99,7 @@ const RegisterContainer = () => {
             </CardContent>
             <CardFooter>
               <div className="space-y-6 w-full pt-4">
-                <Button type="submit" variant="full" disabled={isLoading}>
+                <Button type="submit" variant="full">
                   Submit
                 </Button>
                 <Button variant="ghost" className="w-full">

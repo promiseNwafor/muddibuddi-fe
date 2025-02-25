@@ -1,19 +1,16 @@
 import { RxAvatar } from 'react-icons/rx'
-import { useGetUserQuery } from '@/services/user/userQuery'
 
 const NavbarContainer = () => {
-  const { data: user } = useGetUserQuery()
-
   return (
-    <nav className="border-b border-white/25 p-4 lg:px-10 shadow-md">
+    <nav className="border-b border-white/25 p-4 shadow-md">
       <div className="flex justify-between items-center">
-        <p className="text-white md:text-2xl font-medium relative left-10 lg:left-0">
-          Hi {user?.username}
+        <p className="text-white md:text-2xl font-bold relative left-10 lg:left-0">
+          Welcome
         </p>
 
         <div className="flex items-center space-x-4">
           <RxAvatar size={40} />
-          <span className="text-gray-300">{user?.email}</span>
+          <span className="text-gray-300">User Name</span>
         </div>
       </div>
     </nav>
