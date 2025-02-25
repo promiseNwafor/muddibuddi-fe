@@ -7,6 +7,7 @@ import DashboardLayout from '@/layout/DashboardLayout'
 import AnalyticsPage from '@/pages/AnalyticsPage'
 import SettingsPage from '@/pages/SettingsPage'
 import AddEntryPage from '@/pages/AddEntryPage'
+import ProtectedRoute from '@/components/auth/ProtectedRoute'
 
 const AppRouter = () => {
   return (
@@ -15,7 +16,13 @@ const AppRouter = () => {
         <Route index element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route element={<DashboardLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/add-entry" element={<AddEntryPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />

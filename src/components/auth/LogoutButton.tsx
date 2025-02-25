@@ -1,15 +1,18 @@
+import { logout } from '@/services/user/userSlice'
+import { Button } from '../ui/button'
+
 interface LogoutButtonProps {
   children?: React.ReactNode
 }
 
 export const LogoutButton = ({ children }: LogoutButtonProps) => {
   const onClick = () => {
-    console.log('Logout')
+    logout()
   }
 
   return (
-    <span onClick={onClick} className="cursor-pointer">
+    <Button onClick={onClick} variant="ghost" className="cursor-pointer">
       {children}
-    </span>
+    </Button>
   )
 }
