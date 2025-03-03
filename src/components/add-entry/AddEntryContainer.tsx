@@ -26,6 +26,10 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 
+const currentDate = new Date()
+const formattedTime = format(currentDate, 'HH:mm')
+const formattedDate = currentDate
+
 const AddEntryContainer = () => {
   const [addMoodEntry, { isLoading }] = useAddMoodEntryMutation()
 
@@ -33,22 +37,24 @@ const AddEntryContainer = () => {
     resolver: zodResolver(MoodEntrySchema),
     defaultValues: {
       moodText: '',
-      time: format(new Date(), 'HH:mm'),
+      time: formattedTime,
+      date: formattedDate,
     },
   })
 
   const onSubmit = async (values: MoodEntryFormValues) => {
     try {
-      const dateTime = new Date(values.date)
+      const entryDateTime = new Date(values.date)
       const [hours, minutes] = values.time.split(':')
-      dateTime.setHours(parseInt(hours, 10), parseInt(minutes, 10))
+      entryDateTime.setHours(parseInt(hours, 10), parseInt(minutes, 10))
 
       const formattedValues = {
         moodText: values.moodText,
-        entryDateTime: dateTime.toISOString(),
+        entryDateTime: entryDateTime.toISOString(),
       }
 
       await addMoodEntry(formattedValues).unwrap()
+
       toast.success('Entry added successfully!')
       form.reset()
     } catch (error) {
@@ -106,6 +112,7 @@ const AddEntryContainer = () => {
                             <FormControl>
                               <Button
                                 variant={'outline'}
+                                disabled
                                 className={cn(
                                   'w-full pl-3 text-left font-normal bg-transparent border-accent/45 hover:bg-transparent hover:text-background',
                                   !field.value && 'text-muted-foreground',
@@ -145,6 +152,7 @@ const AddEntryContainer = () => {
                             <Input
                               type="time"
                               className="pl-8 border-accent/45"
+                              disabled
                               {...field}
                             />
                             <ClockIcon className="absolute left-2 top-2.5 h-4 w-4 opacity-50" />
