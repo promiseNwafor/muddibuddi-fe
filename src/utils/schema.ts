@@ -26,6 +26,9 @@ export const MoodEntrySchema = z.object({
   time: z
     .string()
     .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Please enter a valid time'),
+  country: z.string().min(1, 'Please select a country'),
+  city: z.string().min(1, 'Please select a city'),
+  saveAddress: z.boolean(),
 })
 
 export type MoodEntryFormValues = z.infer<typeof MoodEntrySchema>

@@ -4,6 +4,13 @@ export interface ApiResponse<T> {
   data: T
 }
 
+export interface ApiErrorResponse {
+  data: {
+    message: string
+    error: string
+  }
+}
+
 export interface User {
   id: string
   email: string

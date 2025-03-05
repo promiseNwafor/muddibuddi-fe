@@ -1,12 +1,17 @@
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+import Select from 'react-select'
+import { City } from 'country-state-city'
 import { format } from 'date-fns'
 import { toast } from 'sonner'
 import { CalendarIcon, ClockIcon, Pencil } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
+import countryList from 'react-select-country-list'
 
 import { cn } from '@/lib/utils'
 import { MoodEntryFormValues, MoodEntrySchema } from '@/utils/schema'
 import { useAddMoodEntryMutation } from '@/services/mood/moodQuery'
+import { ApiErrorResponse } from '@/types'
+
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
@@ -25,6 +30,7 @@ import {
 } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
+import { Checkbox } from '@/components/ui/checkbox'
 
 const currentDate = new Date()
 const formattedTime = format(currentDate, 'HH:mm')
@@ -39,8 +45,21 @@ const AddEntryContainer = () => {
       moodText: '',
       time: formattedTime,
       date: formattedDate,
+      country: '',
+      city: '',
+      saveAddress: false,
     },
   })
+
+  const countries = countryList().getData()
+  const selectedCountry = form.watch('country')
+
+  const cities = selectedCountry
+    ? City.getCitiesOfCountry(selectedCountry)?.map((city) => ({
+        value: city.name,
+        label: city.name,
+      })) || []
+    : []
 
   const onSubmit = async (values: MoodEntryFormValues) => {
     try {
@@ -51,15 +70,19 @@ const AddEntryContainer = () => {
       const formattedValues = {
         moodText: values.moodText,
         entryDateTime: entryDateTime.toISOString(),
+        country: values.country,
+        city: values.city,
+        saveAddress: values.saveAddress,
       }
 
       await addMoodEntry(formattedValues).unwrap()
 
       toast.success('Entry added successfully!')
       form.reset()
-    } catch (error) {
-      console.error('Error submitting form:', error)
-      toast.error('Something went wrong!')
+    } catch (error: unknown) {
+      const err = error as ApiErrorResponse
+      console.error('Error submitting form:', err)
+      toast.error(`${err?.data?.message || 'Something went wrong!'}`)
     }
   }
 
@@ -99,6 +122,72 @@ const AddEntryContainer = () => {
                     </FormItem>
                   )}
                 />
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="country"
+                    render={() => (
+                      <FormItem>
+                        <FormLabel>Country</FormLabel>
+                        <FormControl>
+                          <Controller
+                            name="country"
+                            control={form.control}
+                            render={({ field }) => (
+                              <Select
+                                {...field}
+                                options={countries}
+                                placeholder="Select a country"
+                                className="border-accent/45"
+                                onChange={(selectedOption) => {
+                                  field.onChange(selectedOption?.value)
+                                  form.setValue('city', '')
+                                }}
+                                value={countries.find(
+                                  (country) => country.value === field.value,
+                                )}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={() => (
+                      <FormItem>
+                        <FormLabel>City</FormLabel>
+                        <FormControl>
+                          <Controller
+                            name="city"
+                            control={form.control}
+                            render={({ field }) => (
+                              <Select
+                                {...field}
+                                options={cities}
+                                placeholder="Select a city"
+                                className="border-accent/45"
+                                onChange={(selectedOption) =>
+                                  field.onChange(selectedOption?.value)
+                                }
+                                value={cities.find(
+                                  (city) => city.value === field.value,
+                                )}
+                                isDisabled={!selectedCountry}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormField
@@ -164,11 +253,28 @@ const AddEntryContainer = () => {
                   />
                 </div>
 
+                <FormField
+                  control={form.control}
+                  name="saveAddress"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="border-accent/45"
+                        />
+                      </FormControl>
+                      <FormLabel>Save this location as my default</FormLabel>
+                    </FormItem>
+                  )}
+                />
+
                 <div className="flex justify-end">
                   <Button
                     type="submit"
                     variant="secondary"
-                    disabled={isLoading}
+                    disabled={isLoading || !form.formState.isValid}
                   >
                     {isLoading ? 'Saving...' : 'Save Entry'}
                   </Button>
